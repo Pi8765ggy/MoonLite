@@ -20,10 +20,6 @@ def create_app(test_config=None):
     # Ensures that app.instance_path exists for SQLite
     os.makedirs(app.instance_path, exist_ok = True)
     
-    #########
-    # Pages #
-    #########
-
     @app.route('/')
     def hello():
         return "hi!!!"
@@ -31,5 +27,9 @@ def create_app(test_config=None):
     # Database initialization
     from . import db
     db.init_app(app)
+
+    # Blueprint registration for authorization
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
