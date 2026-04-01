@@ -8,6 +8,7 @@ from flask_login import (
     LoginManager,
     current_user
 )
+from flask_cors import CORS
 
 from .user import User
 
@@ -28,6 +29,8 @@ def create_app(test_config=None):
 
     login_manager = LoginManager()
     login_manager.init_app(app)
+
+    CORS(app)
     
     # Ensures that app.instance_path exists for SQLite
     os.makedirs(app.instance_path, exist_ok = True)
@@ -38,14 +41,17 @@ def create_app(test_config=None):
     
     @app.route('/')
     def index():
-        return render_template("index.html")
+        return None
 
     # Database initialization
     from . import db
     db.init_app(app)
 
-    # Blueprint registration for authorization
+    # Blueprint registrations
     from . import auth
     app.register_blueprint(auth.bp)
+    
+    from . import api
+    app.register_blueprint(api.bp)
 
     return app
