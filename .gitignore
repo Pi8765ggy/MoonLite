@@ -1,3 +1,4 @@
 .env
 instance/
 .certificates/
+run.sh

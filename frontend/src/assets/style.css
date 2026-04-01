@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px 20px;
+}
+
+/* Left side */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.nav-links a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+/* Right side */
+.nav-right .login-btn {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* Main content */
+.content {
+  padding: 20px;
+}

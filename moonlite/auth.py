@@ -9,14 +9,17 @@ from flask import (
     render_template, 
     request, 
     session, 
-    url_for
+    url_for,
+    jsonify,
+    current_app
 )
 
 from flask_login import (
     LoginManager,
     login_required,
     login_user,
-    logout_user
+    logout_user,
+    current_user
 )
 
 from oauthlib.oauth2 import WebApplicationClient
@@ -106,11 +109,14 @@ def callback():
         User.create(uid, given_name, user_email, picture)
 
     login_user(user)
-
-    return redirect(url_for('index'))
+    print(current_user.is_authenticated)
+    print("INSTANCE:", current_app.config["INSTANCE_ID"])
+    return redirect(url_for('serve_frontend'))
 
 @bp.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return jsonify({
+        "message": "logged out"
+    })
