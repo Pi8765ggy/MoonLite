@@ -1,0 +1,13 @@
+html { color: #FFFBC2; background: #050617; }
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden
+}
+
+ul li {
+	float: right;
+}
+

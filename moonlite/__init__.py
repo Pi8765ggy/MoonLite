@@ -1,6 +1,9 @@
 import os
 
-from flask import Flask
+from flask import (
+        Flask,
+        render_template
+)
 from flask_login import (
     LoginManager,
     current_user
@@ -35,10 +38,7 @@ def create_app(test_config=None):
     
     @app.route('/')
     def index():
-        if current_user.is_authenticated:
-            return "Hello logged in!!!"
-        else:
-            return "not logged in :("
+        return render_template("index.html")
 
     # Database initialization
     from . import db
