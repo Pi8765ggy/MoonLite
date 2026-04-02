@@ -57,16 +57,16 @@
     <nav class="navbar">
       <div class="nav-left">
         <div class="logo">MoonLite</div>
-        <div class="nav-links">
-          <a href="#">Home</a>
-          <a href="#">Dashboard</a>
-          <a href="#">About</a>
-        </div>
       </div>
 
       <div class="nav-right">
-        <button class="login-btn" v-if="!user.logged_in" @click="login">Login</button>
-	<button class="login-btn" v-else @click="logout"> {{ user.email }} </button>
+	<div v-if="!user.logged_in">
+        	<button class="login-btn" @click="login">Login</button>
+	</div>
+	<div v-else>
+		<p> Hello, {{ user.name }}!</p>
+		<button class="login-btn" @click="logout">Logout</button>
+	</div>
       </div>
     </nav>
 
