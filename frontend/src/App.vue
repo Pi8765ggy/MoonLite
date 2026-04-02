@@ -3,25 +3,17 @@
 	// onMounted = run code on load
 	import { ref, onMounted } from "vue"
 
-	console.log("Script ran")
-
-	const moon = ref({})
 	const loadingData = ref(true)
 	const user = ref({})
 
 	onMounted(async () => {
 
 		try {
-			const resp = await fetch("/api/moon")
-			const data = await resp.json()
-			moon.value = data
-
-			const resp1 = await fetch("/api/user", {
+			const resp = await fetch("/api/user", {
 				credentials: "include"
 			})
-			const data1 = await resp1.json()
+			const data = await resp1.json()
 			user.value = data1
-
 		} catch (err) {
 			console.error(err)
 		} finally {
@@ -29,15 +21,18 @@
 		}
 
 	})
-
+	
+	// Now we take them to a fancy page with router
+	/*
 	function login() {
 		window.location.href = "/auth/login"
 	}
+	*/
 
 	async function logout() {
 
 		await fetch('/auth/logout', {
-			credentials: "include"
+			credentials: "include" 
 		})
 
 		const res = await fetch('/api/user', {
@@ -73,17 +68,7 @@
 
     <!-- Main Content -->
     <main class="content">
-	    <div class="sidebar">
-		    <p v-if="!user.logged_in" color="white">
-		    Please log in to see saved lunar events.
-		    </p>
-	    </div>
-	    <div class="main">
-	    	<div v-if="!user.logged_in">
-	    	</div>
-	    	<div v-else>
-	    	</div>
-	    </div>
+	    <router-view />
     </main>
 
   </div>

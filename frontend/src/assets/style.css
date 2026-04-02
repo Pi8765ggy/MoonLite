@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: black;
+  background-color: white;
   font-family: Arial, sans-serif;
 }
 
@@ -54,10 +54,10 @@ body {
 
 .sidebar {
 	color: white;
-	height: 100%; /* Full-height: remove this if you want "auto" height */
-  	width: 30%; /* Set the width of the sidebar */
+	height: 100%; 
+  	width: 30%; 
   	left: 0;
-  	background-color: #111; /* Black */
+  	background-color: #111; 
   	padding-top: 20px;
 }
 
