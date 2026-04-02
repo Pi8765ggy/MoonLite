@@ -15,6 +15,8 @@ body {
   align-items: center;
   background-color: #eee;
   padding: 10px 20px;
+  height: 60px;
+  min-height: 60px;
 }
 
 /* Left side */
@@ -31,8 +33,14 @@ body {
 }
 
 .logo {
+  text-decoration: none;
+  color: black;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 40px;
+}
+
+.logo:hover {
+	color: white;
 }
 
 .nav-links a {

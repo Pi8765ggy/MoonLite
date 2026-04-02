@@ -2,9 +2,12 @@
 	// ref = reactive variables
 	// onMounted = run code on load
 	import { ref, onMounted } from "vue"
+	import { useRouter } from "vue-router"
 
 	const loadingData = ref(true)
 	const user = ref({})
+
+	const router = useRouter()
 
 	onMounted(async () => {
 
@@ -12,8 +15,8 @@
 			const resp = await fetch("/api/user", {
 				credentials: "include"
 			})
-			const data = await resp1.json()
-			user.value = data1
+			const data = await resp.json()
+			user.value = data
 		} catch (err) {
 			console.error(err)
 		} finally {
@@ -22,12 +25,9 @@
 
 	})
 	
-	// Now we take them to a fancy page with router
-	/*
 	function login() {
-		window.location.href = "/auth/login"
+		router.push('/login')
 	}
-	*/
 
 	async function logout() {
 
@@ -51,7 +51,7 @@
     <!-- Navbar -->
     <nav class="navbar">
       <div class="nav-left">
-        <div class="logo">MoonLite</div>
+	      <router-link class="logo" to="/">MoonLite</router-link>
       </div>
 
       <div class="nav-right">
