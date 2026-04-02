@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: black;
   font-family: Arial, sans-serif;
 }
 
@@ -49,4 +50,17 @@ body {
 /* Main content */
 .content {
   padding: 20px;
+}
+
+.sidebar {
+	color: white;
+	height: 100%; /* Full-height: remove this if you want "auto" height */
+  	width: 30%; /* Set the width of the sidebar */
+  	left: 0;
+  	background-color: #111; /* Black */
+  	padding-top: 20px;
+}
+
+.main {
+  margin-left: 160px
 }

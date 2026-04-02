@@ -64,7 +64,7 @@
         	<button class="login-btn" @click="login">Login</button>
 	</div>
 	<div v-else>
-		<img :src="user.picture" height=50px width=50px />
+		<img :src="user.picture" height=40px width=40px />
 		<p> Hello, {{ user.name }}!</p>
 		<button class="login-btn" @click="logout">Logout</button>
 	</div>
@@ -73,8 +73,17 @@
 
     <!-- Main Content -->
     <main class="content">
-      	<h1 v-if="!loading"> {{ moon.phase }} </h1>
-	<p v-else> LOADING!!!!! </p>
+	    <div class="sidebar">
+		    <p v-if="!user.logged_in" color="white">
+		    Please log in to see saved lunar events.
+		    </p>
+	    </div>
+	    <div class="main">
+	    	<div v-if="!user.logged_in">
+	    	</div>
+	    	<div v-else>
+	    	</div>
+	    </div>
     </main>
 
   </div>

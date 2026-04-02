@@ -2,6 +2,8 @@ from flask import Blueprint, g, jsonify, session
 from .db import get_db
 from flask_login import current_user
 import base64, os, requests
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 bp = Blueprint('api', __name__, url_prefix = '/api')
 
@@ -13,15 +15,13 @@ def moon():
     userpass = appID + ':' + appSecret
     authString = base64.b64encode(userpass.encode()).decode()
 
-    url = "https://api.astronomyapi.com/api/v2/bodies"
-
     headers = {
         "Authorization": "Basic " + authString
     }
-    
+
+    url = "https://api.astronomyapi.com/api/v2/bodies"
     response = requests.get(url, headers = headers)
 
-    print(response.status_code)
     print(response.json())
 
     return jsonify({
