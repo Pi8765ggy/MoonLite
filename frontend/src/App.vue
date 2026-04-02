@@ -64,6 +64,7 @@
         	<button class="login-btn" @click="login">Login</button>
 	</div>
 	<div v-else>
+		<img :src="user.picture" height=50px width=50px />
 		<p> Hello, {{ user.name }}!</p>
 		<button class="login-btn" @click="logout">Logout</button>
 	</div>
