@@ -47,7 +47,12 @@ bp = Blueprint('auth', __name__, url_prefix = '/auth')
 @bp.route("/login")
 def login():
     # Get Google URL for login
-    google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
+    # If fails for some reason, send user back to home page.
+    try:
+        google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
+    except:
+        return redirect(url_for('serve_frontend'))
+
     auth_endpoint = google_provider_cfg["authorization_endpoint"]
 
     request_uri = client.prepare_request_uri(

@@ -7,8 +7,8 @@ from dateutil.relativedelta import relativedelta
 
 bp = Blueprint('api', __name__, url_prefix = '/api')
 
-@bp.route("/moon_phase")
-def moon_phase():
+@bp.route("/moon_img")
+def moon_img():
     # Required format by AstronomyAPI. More details on their website.
     appID = os.environ.get("ASTRONOMY_ID")
     appSecret = os.environ.get("ASTRONOMY_SECRET")
@@ -25,19 +25,22 @@ def moon_phase():
     latitude = os.environ.get("UCD_LAT")
     longitude = os.environ.get("UCD_LONG")
 
+    day = date.today().strftime("%Y-%m-%d")
+    
     body = {
-    "format": "png",
+    "format": "svg",
     "style": {
         "moonStyle": "default",
-        "backgroundStyle": "stars",
-        "backgroundColor": "red",
-        "headingColor": "white",
-        "textColor": "red"
+        "backgroundStyle": "solid",
+        "backgroundColor": "black",
+        # Makes the text invisible
+        "headingColor": "black",
+        "textColor": "black"
     },
     "observer": {
         "latitude": float(latitude),
         "longitude": float(longitude),
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": day
     },
         "view": {
             "type": "portrait-simple",
@@ -45,17 +48,30 @@ def moon_phase():
     }
 
     # Reponse is a url to the image with given body params
-    response = requests.post(url, headers = headers, json = body)
-
-    print(response.json())
-
-    return jsonify(response.json())
+    try:
+        response = requests.post(url, headers = headers, json = body)
+    except:
+        return jsonify(None), 404 # - ERROR
     
+    # Extract the image url from the response
+    url = response.json()["data"]["imageUrl"]
+
+    body = {
+        "imageUrl": url,
+        "date": day
+    }
+
+    return jsonify(body), 201
+
+@bp.route("/moon_data")
+def moon_data():
+
+    return jsonify(None), 404;
 
 @bp.route("/user")
 def user():
-    print(session)
-    print(current_user.is_authenticated)
+    # print(session)
+    # print(current_user.is_authenticated)
     if current_user.is_authenticated:
         return jsonify({
             "logged_in": True,

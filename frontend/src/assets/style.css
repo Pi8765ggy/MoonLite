@@ -1,7 +1,13 @@
 body {
   margin: 0;
-  background-color: white;
+  background-color: black;
+  color: white;
   font-family: Arial, sans-serif;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
 }
 
 .app {
@@ -13,7 +19,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #eee;
+  background-color: #090909;
   padding: 10px 20px;
   height: 60px;
   min-height: 60px;
@@ -26,21 +32,19 @@ body {
   gap: 20px;
 }
 
-.nav-right div {
-  display: flex;
-  align-items: center;
-  gap: 20;
-}
 
 .logo {
+  transition: color 2s, transform 1s;
   text-decoration: none;
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: 40px;
+  padding-left: 20px;
 }
 
 .logo:hover {
-	color: white;
+	transform: scale(1.1);
+	color: #ffe74d;
 }
 
 .nav-links a {
@@ -50,14 +54,24 @@ body {
 }
 
 /* Right side */
+.nav-right {
+	transition: transform 0.2s;
+}
+
+.nav-right:hover {
+	transform: scale(1.05);
+}
+
+.nav-right div {
+  display: flex;
+  align-items: center;
+  gap: 20;
+}
+
 .nav-right div .login-btn {
   padding: 6px 12px;
   cursor: pointer;
-}
-
-/* Main content */
-.content {
-  padding: 20px;
+  font-weight: bold;
 }
 
 .sidebar {
@@ -69,6 +83,53 @@ body {
   	padding-top: 20px;
 }
 
-.main {
-  margin-left: 160px
+.mainView {
+	display: flex;
+	gap: 20px;
+	padding: 15px;
+	height: 85vh;
+}
+
+.moonImg {
+	height: 100%;
+	width: auto;
+	border-radius: 12px;
+	flex-shrink: 0;
+}
+
+.moonData {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  flex: 1; /* take remaining space */
+}
+
+.card {
+  padding: 16px;
+  border-radius: 10px;
+}
+
+/* MainView Style */
+.dataView {
+	display: flex;
+	flex: 2;
+	background-color: #080808;
+	border-radius: 20px;
+}
+.dataView div {
+	margin: 5px;
+	padding: 10px;
+}
+
+.infoInput {
+	flex: 1;
+	background-color: #080808;
+	border-radius: 20px;
+	padding: 15px;
+	transition: background-color 0.5s, transform 0.5s;
+}
+
+.infoInput:hover {
+	background-color: #101010;
+	transform: scale(1.01);
 }
