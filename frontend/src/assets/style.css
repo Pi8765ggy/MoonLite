@@ -101,13 +101,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0px;
-  flex: 1; /* take remaining space */
+  flex: 1;
 }
 
 .card {
-  padding: 16px;
+  padding: 5px;
   border-radius: 10px;
   transition: transform 0.3s, background-color 0.3s;
+  text-align: center;
+  flex: 1;
 }
 
 .card:hover {
@@ -116,11 +118,11 @@ body {
 }
 
 .card h1 {
-	font-size: 35px;
+	font-size: 22px;
 }
 
 .card p {
-	font-size: 22px;
+	font-size: 29px;
 	font-weight: bold;
 }
 
@@ -128,7 +130,7 @@ body {
 .dataView {
 	display: flex;
 	flex: 2;
-	background-color: #080808;
+	background-color: #090909;
 	border-radius: 20px;
 }
 .dataView div div {
@@ -138,7 +140,7 @@ body {
 
 .infoInput {
 	flex: 1;
-	background-color: #080808;
+	background-color: #090909;
 	border-radius: 20px;
 	padding: 15px;
 	transition: background-color 0.5s, transform 0.5s;
@@ -149,6 +151,12 @@ body {
 	transform: scale(1.01);
 }
 
+.infoInput form label {
+	font-size: 20px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
 .infoInput form input {
 	padding: 10px;
 	color: white;
@@ -156,7 +164,26 @@ body {
 	font-weight: bold;
 	border: solid 3px #111111;
 	border-radius: 5px;
-	margin: 5px;
 	background-color: #000;
 	width: 90%;
+	margin-bottom: 20px;
+	margin-top: 5px;
+	transition: border 0.2s;
+}
+
+.infoInput form input:focus {
+	border: solid 3px #ffe74d;
+	outline: none;
+}
+
+/* Removes the "ticker" on the side of the number input */
+/* Non-Firefox */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

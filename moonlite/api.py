@@ -1,4 +1,4 @@
-from flask import Blueprint, g, jsonify, session
+from flask import Blueprint, g, jsonify, session, request
 from .db import get_db
 from flask_login import current_user
 import base64, os, requests
@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 bp = Blueprint('api', __name__, url_prefix = '/api')
 
 def genAPIAuth():
-    # Required form by astronomy API. more details on website.
+    # Required form by astronomy API. More details on website.
     appID = os.environ.get("ASTRONOMY_ID")
     appSecret = os.environ.get("ASTRONOMY_SECRET")
     userpass = appID + ':' + appSecret
@@ -29,12 +29,24 @@ def moon_img():
 
     url = "https://api.astronomyapi.com/api/v2/studio/moon-phase"
 
-    # TODO: implement getting user lat and long
-    latitude = os.environ.get("UCD_LAT")
-    longitude = os.environ.get("UCD_LONG")
+    defaultLat = os.environ.get("UCD_LAT")
+    defaultLong = os.environ.get("UCD_LONG")
+    defaultDay = date.today().strftime("%Y-%m-%d")
 
-    day = date.today().strftime("%Y-%m-%d")
-    
+    rLat = request.args.get("lat")
+    rLong = request.args.get("lon")
+    rDatetime = request.args.get("dt")
+
+    if rLat == "null" or rLong == "null" or rDatetime == "null":
+        latitude = defaultLat
+        longitude = defaultLong
+        day = defaultDay
+    else:
+        latitude = rLat
+        longitude = rLong
+        dt = datetime.fromisoformat(rDatetime)
+        day = dt.strftime("%Y-%m-%d")
+
     body = {
     "format": "svg",
     "style": {
@@ -46,6 +58,9 @@ def moon_img():
         "textColor": "black"
     },
     "observer": {
+        # Note: For some strange reason, querying the moon phase endpoint
+        # requires the lat and long as floats, but the bodies positions endpoint
+        # needs them as strings. perhaps post an issue to AstronomyAPI?
         "latitude": float(latitude),
         "longitude": float(longitude),
         "date": day
@@ -72,6 +87,31 @@ def moon_img():
 
 @bp.route("/moon_data")
 def moon_data():
+
+    defaultLat = os.environ.get("UCD_LAT")
+    defaultLong = os.environ.get("UCD_LONG")
+    defaultDay = date.today().strftime("%Y-%m-%d")
+    defaultTime = datetime.now().strftime("%H:%M:%S")
+
+    rLat = request.args.get("lat")
+    rLong = request.args.get("lon")
+    rDatetime = request.args.get("dt")
+
+    print(rLat)
+    print(rLong)
+    print(rDatetime)
+
+    if rLat == "null" or rLong == "null" or rDatetime == "null":
+        latitude = defaultLat
+        longitude = defaultLong
+        day = defaultDay
+        time = defaultTime
+    else:
+        latitude = rLat
+        longitude = rLong
+        dt = datetime.fromisoformat(rDatetime)
+        day = dt.strftime("%Y-%m-%d")
+        time = dt.strftime("%H:%M:00")
     
     headers = {
         "Authorization": genAPIAuth()
@@ -80,13 +120,6 @@ def moon_data():
     url = "https://api.astronomyapi.com/api/v2/bodies/positions/moon"
 
     # TODO: implement getting user lat and long
-    latitude = os.environ.get("UCD_LAT")
-    longitude = os.environ.get("UCD_LONG")
-
-    day = date.today().strftime("%Y-%m-%d")
-    time = datetime.now().strftime("%H:%M:%S")
-
-    print(time)
 
     params = {
         "latitude": latitude,
@@ -117,7 +150,7 @@ def moon_data():
     qmoon = response["data"]["table"]["rows"][0]["cells"][0]
     isodate = qmoon["date"]
     dt = datetime.fromisoformat(isodate)
-    qdate = dt.strftime("%m/%d/%Y")
+    qdate = dt.strftime("%m / %d / %Y")
     qtime = dt.strftime("%H:%M")
     # dist in km is a string, but dont need such precision for display.
     # convert to float, then round, then convert back to string.
@@ -130,7 +163,6 @@ def moon_data():
     # If altitude is below horizon, (ie, less than zero), return a basic message
     if tempaltfloat <= 0:
         tempalt = "Below Horizon"
-        tempaz = "None"
 
     qposition = {
         "altitude": tempalt,
@@ -144,7 +176,11 @@ def moon_data():
         "time": qtime,
         "distance": qdistKM,
         "position": qposition,
-        "phase": qphase
+        "phase": qphase,
+        "location": {
+            "latitude": latitude,
+            "longitude": longitude
+        }
     }
     
     print(formatted)

@@ -8,34 +8,79 @@
 	const loadingData = ref(true)
 	const error = ref(false)
 
+	const latitude = ref(null)
+	const longitude = ref(null)
+	const datetime = ref("")
+
 	onMounted(async () => {
-		try {
-			const resp = await fetch("/api/moon_img")
-			if (!resp.ok) {
+		try {	
+			
+			const params = new URLSearchParams({
+				lat: null,
+				lon: null,
+				dt: null
+			})
+
+			const resp = await fetch(`/api/moon_img?${params.toString()}`)
+			const resp1 = await fetch(`/api/moon_data?${params.toString()}`)
+			if (!resp.ok || !resp1.ok) {
 				// Catches a bad response code from the flask api
 				console.error(resp.status)
 				error.value = true
 				return
 			}
 			const data = await resp.json()
-			moon_img.value = data
-
-			const resp1 = await fetch("/api/moon_data")
-			if (!resp1.ok) {
-				console.error(resp1.status)
-				error.value = true
-				return
-			}
 			const data1 = await resp1.json()
+			moon_img.value = data
 			moon_data.value = data1
+
 		} catch (err) {
 			console.error(err)
 		} finally {
 			loadingData.value = false
 		}
 	})
+	
+	// cool syntax
+	// var handleSubmit is = a function () that runs => following code {}:
+	const handleSubmit = async () => {
+		if (
+		latitude.value === null || isNaN(latitude.value) || latitude.value > 90 || latitude.value < -90 ||
+		longitude.value === null || isNaN(longitude.value) || longitude.value > 180 || longitude.value < -180
+		)
+		{
+			error.value = true
+			return
+		}
+		
+		const params = new URLSearchParams({
+			lat: latitude.value,
+			lon: longitude.value,
+			dt: datetime.value
+		})
 
-	fetch("/api/moon_data")
+		try {
+			loadingData.value = true
+
+			const resp = await fetch(`/api/moon_data?${params.toString()}`)
+			const resp1 = await fetch(`/api/moon_img?${params.toString()}`)
+			if (!resp.ok || !resp1.ok) {
+				console.error(resp.status)
+				error.value = true
+				return
+			}
+			const data = await resp.json()
+			const data1 = await resp1.json()
+			moon_data.value = data
+			moon_img.value = data1
+
+		} catch (err) {
+			console.log(err)
+		} finally {
+			loadingData.value = false
+		}
+	}
+
 </script>
 
 <template>
@@ -70,10 +115,19 @@
 		<div v-else><h1>Loading data, please wait...</h1></div>
 		<div class="infoInput">
 			<h1>Local Information</h1>
-			<form>
-				<input type="text" id="latitude" value="asdfasdf" required>
-				<input type="text" id="longitude" value="asdfasdf" required>
-				<input type="datetime-local" id="datetime" required>
+			<form @submit.prevent="handleSubmit">
+				<label for="latitude">Enter latitude:</label>
+				<input type="number" id="latitude" :placeholder="moon_data.location.latitude" 
+				min="-90" max="90" step="any" v-model.number="latitude" required>
+
+				<label for="longitude">Enter longitude:</label>
+				<input type="number" id="longitude" :placeholder="moon_data.location.longitude" 
+				min="-180" max="180" step="any" v-model.number="longitude" required>
+
+				<label for="datetime">Enter date:</label>
+				<input type="datetime-local" id="datetime" v-model="datetime" required>
+
+				<button type="submit">Submit</button>
 			</form>
 		</div>
 	</div>
