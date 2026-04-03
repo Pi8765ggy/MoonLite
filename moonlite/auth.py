@@ -36,14 +36,10 @@ GOOGLE_DISCOVERY_URL = (
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
-login_manager = LoginManager()
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
-
 bp = Blueprint('auth', __name__, url_prefix = '/auth')
 
+# Endpoint to login to google.
+# Should be redirected to by the frontend, not just fetched.
 @bp.route("/login")
 def login():
     # Get Google URL for login
@@ -52,7 +48,8 @@ def login():
         google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
     except:
         return redirect(url_for('serve_frontend'))
-
+    
+    # Google OAuth endpoint to sign in
     auth_endpoint = google_provider_cfg["authorization_endpoint"]
 
     request_uri = client.prepare_request_uri(
@@ -63,6 +60,7 @@ def login():
 
     return redirect(request_uri)
 
+# Callback endpoint as specified in above endpoint
 @bp.route("/login/callback")
 def callback():
     code = request.args.get("code")
@@ -113,9 +111,11 @@ def callback():
     if not User.get(uid):
         User.create(uid, given_name, user_email, picture)
 
+    # Login with login manager and send back to home page.
     login_user(user)
     return redirect(url_for('serve_frontend'))
 
+# Simply logs out using login manager. Do not need to query google.
 @bp.route("/logout")
 @login_required
 def logout():

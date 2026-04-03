@@ -12,13 +12,18 @@ from flask_login import (
 
 from .user import User
 
+# Init the login manager instance
 login_manager = LoginManager()
 
+# Function is required by login manager
+# must return a user from database with valid object parameters
+# documentation on flask login website
 @login_manager.user_loader
 def load_user(user_id):
     user = User.get(user_id)
     return user
 
+# App factory
 def create_app(test_config=None):
     # Create and configure app
     app = Flask(__name__, static_folder="dist/assets", template_folder="dist")
@@ -30,15 +35,18 @@ def create_app(test_config=None):
         SESSION_COOKIE_SECURE = True
     )
 
+    # Create unique instance id
     app.config["INSTANCE_ID"] = str(uuid.uuid4())
 
     if test_config is None:
         # Apply config pyfile if no test config is applied
+        # No such file exists, so this doesnt do anything.
         app.config.from_pyfile('config.py', silent = True)
     else:
         # Otherwise, apply the test config
         app.config.from_mapping(test_config)
 
+    # Init app with loginmanager
     login_manager.init_app(app)
 
     # Ensures that app.instance_path exists for SQLite
@@ -50,9 +58,16 @@ def create_app(test_config=None):
     def serve_frontend():
         return send_from_directory("dist", "index.html")
 
+    # Redirect to path in dist if exists.
+    # Otherwise, default to main page.
     @app.route("/<path:path>")
     def serve_static(path):
-        return send_from_directory("dist", path)
+        file_path = os.path.join("dist", path)
+
+        if os.path.exists(file_path):
+            return send_from_directory("dist", path)
+        else:
+            return send_from_directory("dist", "index.html")
 
     # Database initialization
     from . import db
@@ -61,7 +76,6 @@ def create_app(test_config=None):
     # Blueprint registrations
     from . import auth
     app.register_blueprint(auth.bp)
-    
     from . import api
     app.register_blueprint(api.bp)
 

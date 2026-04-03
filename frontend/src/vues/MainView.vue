@@ -1,26 +1,33 @@
 <script setup>
 	import { ref, onMounted } from "vue"
 	
+	// Vue makes it really easy with ref variables.
+	// These variables automatically update values in the html itself when
+	// they change.
+
 	// moon_img only contains the img url
 	// moon_data contains the rest of the important info
 	const moon_img = ref({})
 	const moon_data = ref({})
 	const loadingData = ref(true)
 	const error = ref(false)
-
+	
+	// Default values
 	const latitude = ref(null)
 	const longitude = ref(null)
 	const datetime = ref("")
 
+	// function runs when this .vue is loaded.
 	onMounted(async () => {
 		try {	
-			
+			// Create params
 			const params = new URLSearchParams({
 				lat: null,
 				lon: null,
 				dt: null
 			})
-
+			
+			// gets data from flask api endpoint
 			const resp = await fetch(`/api/moon_img?${params.toString()}`)
 			const resp1 = await fetch(`/api/moon_data?${params.toString()}`)
 			if (!resp.ok || !resp1.ok) {
@@ -33,7 +40,6 @@
 			const data1 = await resp1.json()
 			moon_img.value = data
 			moon_data.value = data1
-
 		} catch (err) {
 			console.error(err)
 		} finally {
@@ -41,8 +47,9 @@
 		}
 	})
 	
-	// cool syntax
-	// var handleSubmit is = a function () that runs => following code {}:
+	// Handles submission of the form, and checks for valid data.
+	// In theory, html prevents bad data but still could be submitted through tool like postman.
+	// Same fetch structure as above
 	const handleSubmit = async () => {
 		if (
 		latitude.value === null || isNaN(latitude.value) || latitude.value > 90 || latitude.value < -90 ||

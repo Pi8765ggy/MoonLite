@@ -1,4 +1,5 @@
 <script setup>
+	// Redirect to login endpoint
 	function login() {
 		window.location.href = "/auth/login"
 	}

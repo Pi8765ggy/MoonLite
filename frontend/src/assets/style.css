@@ -1,3 +1,5 @@
+/* Stylesheet for App.vue and MainView.vue. */
+/* Other vues use the built-in "style" tag */
 body {
  	margin: 0;
   	background-color: black;
