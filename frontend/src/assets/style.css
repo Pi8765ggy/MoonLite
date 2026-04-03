@@ -107,6 +107,21 @@ body {
 .card {
   padding: 16px;
   border-radius: 10px;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.card:hover {
+	background-color: #101010;
+	transform: scale(1.1);
+}
+
+.card h1 {
+	font-size: 35px;
+}
+
+.card p {
+	font-size: 22px;
+	font-weight: bold;
 }
 
 /* MainView Style */
@@ -116,7 +131,7 @@ body {
 	background-color: #080808;
 	border-radius: 20px;
 }
-.dataView div {
+.dataView div div {
 	margin: 5px;
 	padding: 10px;
 }
@@ -132,4 +147,16 @@ body {
 .infoInput:hover {
 	background-color: #101010;
 	transform: scale(1.01);
+}
+
+.infoInput form input {
+	padding: 10px;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	border: solid 3px #111111;
+	border-radius: 5px;
+	margin: 5px;
+	background-color: #000;
+	width: 90%;
 }
