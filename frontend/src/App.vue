@@ -52,6 +52,7 @@
     <nav class="navbar">
       <div class="nav-left">
 	      <router-link class="logo" to="/">MoonLite</router-link>
+	      <router-link class="about" to="/about">About</router-link>
       </div>
 
       <div class="nav-right">

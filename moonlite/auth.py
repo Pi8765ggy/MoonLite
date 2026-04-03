@@ -114,8 +114,6 @@ def callback():
         User.create(uid, given_name, user_email, picture)
 
     login_user(user)
-    print(current_user.is_authenticated)
-    print("INSTANCE:", current_app.config["INSTANCE_ID"])
     return redirect(url_for('serve_frontend'))
 
 @bp.route("/logout")

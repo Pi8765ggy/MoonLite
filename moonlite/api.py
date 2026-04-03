@@ -51,7 +51,7 @@ def moon_img():
     "format": "svg",
     "style": {
         "moonStyle": "default",
-        "backgroundStyle": "solid",
+        "backgroundStyle": "stars",
         "backgroundColor": "black",
         # Makes the text invisible
         "headingColor": "black",
@@ -74,7 +74,7 @@ def moon_img():
     try:
         response = requests.post(url, headers = headers, json = body)
     except:
-        return jsonify(None), 404 # - ERROR
+        return jsonify(None), response.status_code
     
     # Extract the image url from the response
     imgurl = response.json()["data"]["imageUrl"]
@@ -96,10 +96,6 @@ def moon_data():
     rLat = request.args.get("lat")
     rLong = request.args.get("lon")
     rDatetime = request.args.get("dt")
-
-    print(rLat)
-    print(rLong)
-    print(rDatetime)
 
     if rLat == "null" or rLong == "null" or rDatetime == "null":
         latitude = defaultLat
@@ -183,13 +179,10 @@ def moon_data():
         }
     }
     
-    print(formatted)
     return jsonify(formatted), 200
 
 @bp.route("/user")
 def user():
-    # print(session)
-    # print(current_user.is_authenticated)
     if current_user.is_authenticated:
         return jsonify({
             "logged_in": True,

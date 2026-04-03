@@ -1,8 +1,8 @@
 body {
-  margin: 0;
-  background-color: black;
-  color: white;
-  font-family: Arial, sans-serif;
+ 	margin: 0;
+  	background-color: black;
+  	color: white;
+  	font-family: Arial, sans-serif;
 }
 
 .error {
@@ -11,35 +11,49 @@ body {
 }
 
 .app {
-  min-height: 100vh;
+  	min-height: 100vh;
 }
 
 /* Navbar */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #090909;
-  padding: 10px 20px;
-  height: 60px;
-  min-height: 60px;
+  	display: flex;
+  	justify-content: space-between;
+  	align-items: center;
+  	background-color: #090909;
+  	padding: 10px 20px;
+  	height: 60px;
+  	min-height: 60px;
 }
 
 /* Left side */
 .nav-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  	display: flex;
+  	align-items: center;
+  	gap: 20px;
 }
 
 
 .logo {
-  transition: color 2s, transform 1s;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  font-size: 40px;
-  padding-left: 20px;
+  	transition: color 2s, transform 1s;
+  	text-decoration: none;
+  	color: white;
+  	font-weight: bold;
+  	font-size: 40px;
+  	padding-left: 20px;
+}
+
+.about {
+  	transition: color 2s, transform 1s;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	margin-left: 30px;
+}
+
+.about:hover {
+	transform: scale(1.1);
+	color: #ffe74d;
 }
 
 .logo:hover {
@@ -48,9 +62,9 @@ body {
 }
 
 .nav-links a {
-  margin-right: 10px;
-  text-decoration: none;
-  color: black;
+  	margin-right: 10px;
+  	text-decoration: none;
+  	color: black;
 }
 
 /* Right side */
@@ -63,15 +77,15 @@ body {
 }
 
 .nav-right div {
-  display: flex;
-  align-items: center;
-  gap: 20;
+  	display: flex;
+  	align-items: center;
+  	gap: 20;
 }
 
 .nav-right div .login-btn {
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: bold;
+  	padding: 6px 12px;
+  	cursor: pointer;
+  	font-weight: bold;
 }
 
 .sidebar {
@@ -98,18 +112,18 @@ body {
 }
 
 .moonData {
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
-  flex: 1;
+  	display: flex;
+  	flex-direction: column;
+  	gap: 0px;
+  	flex: 1;
 }
 
 .card {
-  padding: 5px;
-  border-radius: 10px;
-  transition: transform 0.3s, background-color 0.3s;
-  text-align: center;
-  flex: 1;
+  	padding: 5px;
+  	border-radius: 10px;
+  	transition: transform 0.3s, background-color 0.3s;
+  	text-align: center;
+  	flex: 1;
 }
 
 .card:hover {
@@ -129,6 +143,7 @@ body {
 /* MainView Style */
 .dataView {
 	display: flex;
+	flex-direction: row-reverse;
 	flex: 2;
 	background-color: #090909;
 	border-radius: 20px;
@@ -174,6 +189,26 @@ body {
 .infoInput form input:focus {
 	border: solid 3px #ffe74d;
 	outline: none;
+}
+
+.infoInput form button {
+	width: 30%;
+	height: 40px;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: #D3D3D3;
+	font-size: 15px;
+	font-weight: bold;
+	color: black;
+	border: none;
+	outline: none;
+	transition: transform 0.3s;
+	border-radius: 7px;
+}
+
+.infoInput form button:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
 
 /* Removes the "ticker" on the side of the number input */

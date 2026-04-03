@@ -112,7 +112,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-else><h1>Loading data, please wait...</h1></div>
+		<div class = "dataView" v-else><h1>Loading data, please wait...</h1></div>
 		<div class="infoInput">
 			<h1>Local Information</h1>
 			<form @submit.prevent="handleSubmit">

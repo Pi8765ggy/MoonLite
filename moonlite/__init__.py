@@ -31,7 +31,6 @@ def create_app(test_config=None):
     )
 
     app.config["INSTANCE_ID"] = str(uuid.uuid4())
-    print("APP INSTANCE CREATED:", app.config["INSTANCE_ID"])
 
     if test_config is None:
         # Apply config pyfile if no test config is applied
