@@ -1,7 +1,7 @@
 ## About
   MoonLite is an interface for the AstronomyAPI to query data about the moon at a specific date and time.
   It also has an included database and user login system through Google's OAuth for future use.
-## Steps to installing and running MoonLite:
+## Steps to installing and running MoonLite (Linux):
 1. Make sure python's venv is installed, along with npm.
 2. Run the build.sh script included in the repository. (Or, if you don't trust me, run it line by line).
   - Note: This command will scrub the database. Do not build the app again if you want the database to persist.
