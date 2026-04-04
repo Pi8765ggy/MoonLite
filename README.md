@@ -27,10 +27,11 @@
 MoonLite utilizes Vue, Flask, and SQLite for its execution.
 It follows a semi-RESTful API structure, where the user "logged-in" state is stored on the server.
 
-## Video Demo
-https://youtu.be/4qMDgV5V9JU
 Other than that, Flask only serves as a backend API to be queried by Vue on the frontend.
 It utilizes basic GET requests and url parameters to recieve information.
 
 SQLite is used to store user data as returned by Google's OAuth flow.
 This data can then be queried by Vue to show the user's profile picture and verify if they are logged in.
+
+## Video Demo
+https://youtu.be/4qMDgV5V9JU
