@@ -12,6 +12,8 @@
 	- ASTRONOMY_SECRET: AstronomyAPI secret
 	- ASTRONOMY_ID: AstronomyAPI ID
 	- UCD_LAT / UCD_LONG: Originally the location of UC Davis. Change to a vaild float for a default latitude and longitude when the page loads.
-4. Run the application from the root folder, using the flask command: 
+4. Activate the python venv with:
+    - source .venv/bin/activate
+5. Run the application from the root folder, using the flask command: 
 	- flask --app moonlite run --cert=adhoc --debug 
-5. Go to https://127.0.0.1:5000 to access the app.
+6. Go to https://127.0.0.1:5000 to access the app.
