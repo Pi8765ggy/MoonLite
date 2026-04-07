@@ -1,4 +1,4 @@
-from flask import Blueprint, g, jsonify, session, request
+from flask import Blueprint, jsonify, request
 from .db import get_db
 from flask_login import current_user
 import base64, os, requests
@@ -9,8 +9,8 @@ bp = Blueprint('api', __name__, url_prefix = '/api')
 # Generates API key as specified by AstronomyAPI.
 # More details on AstronomyAPI website.
 def genAPIAuth():
-    appID = os.environ.get("ASTRONOMY_ID")
-    appSecret = os.environ.get("ASTRONOMY_SECRET")
+    appID = os.environ.get("ASTRONOMY_ID", "")
+    appSecret = os.environ.get("ASTRONOMY_SECRET", "")
     userpass = appID + ':' + appSecret
     authString = base64.b64encode(userpass.encode()).decode()
 
@@ -46,7 +46,7 @@ def moon_img():
 
     # Should only ever be null on the first request.
     # Form and frontend theoretically prevent bad values from coming into backend.
-    if rLat == "null" or rLong == "null" or rDatetime == "null":
+    if rLat == "null" or rLong == "null" or rDatetime == "null" or rLat is None or rLong is None or rDatetime is None:
         latitude = defaultLat
         longitude = defaultLong
         day = defaultDay
