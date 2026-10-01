@@ -32,6 +32,3 @@ It utilizes basic GET requests and url parameters to recieve information.
 
 SQLite is used to store user data as returned by Google's OAuth flow.
 This data can then be queried by Vue to show the user's profile picture and verify if they are logged in.
-
-## Video Demo
-https://youtu.be/4qMDgV5V9JU
